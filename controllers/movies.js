@@ -12,9 +12,9 @@ function errHandler(err, req, res, next) {
 }
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({owner: req.user._id})
+  Movie.find({ owner: req.user._id })
     .populate('user')
-    .then((Movie) => res.send({ data: Movie }))
+    .then((movie) => res.send({ data: movie }))
     .catch((err) => {
       errHandler(err);
       next(err);
@@ -23,14 +23,13 @@ module.exports.getMovies = (req, res, next) => {
 
 module.exports.deleteMovies = (req, res, next) => {
   Movie.findById(req.params.movieId)
-    .then((Movie) => {
-      if (Movie) {
-        if (Movie.owner == req.user._id) {
-          Movie.remove();
-          return res.send({ data: Movie });
-        } else {
-          throw new ForbiddenRequest('Фильм не из вашей коллекции =Р');
+    .then((movie) => {
+      if (movie) {
+        if (movie.owner == req.user._id) {
+          movie.remove();
+          return res.send({ data: movie });
         }
+        throw new ForbiddenRequest('Фильм не из вашей коллекции =Р');
       }
       throw new NotFoundError('Фильм не найден');
     })
@@ -41,9 +40,25 @@ module.exports.deleteMovies = (req, res, next) => {
 };
 
 module.exports.createMovies = (req, res, next) => {
-  const { country, director, duration, year, description, image, trailer, thumbnail, movieId, nameRU, nameEN } = req.body;
-  Movie.create({ country, director, duration, year, description, image, trailer, thumbnail, owner: req.user._id, movieId, nameRU, nameEN }) //owner: req.user._id
-    .then((Movie) => res.send({ data: Movie }))
+  const {
+    country, director, duration, year, description, image, trailer, thumbnail,
+    movieId, nameRU, nameEN
+  } = req.body;
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    thumbnail,
+    owner: req.user._id,
+    movieId,
+    nameRU,
+    nameEN
+  }) // owner: req.user._id
+    .then((movie) => res.send({ data: movie }))
     .catch((err) => {
       errHandler(err);
       next(err);

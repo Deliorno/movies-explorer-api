@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 // const { LogInErr } = require('../errors/errors');
 
 const MovieSchema = new mongoose.Schema({
@@ -9,23 +9,19 @@ const MovieSchema = new mongoose.Schema({
   },
   director: {
     type: String,
-    required: true,
-  },
-  director: {
-    type: String,
-    required: true,
+    required: true
   },
   duration: {
     type: Number,
-    required: true,
+    required: true
   },
   year: {
     type: String,
-    required: true,
+    required: true
   },
   description: {
     type: String,
-    required: true,
+    required: true
   },
   image: {
     type: String,
@@ -57,22 +53,22 @@ const MovieSchema = new mongoose.Schema({
       message: 'Неверная ссылка на изображение'
     }
   },
-  owner:{
+  owner: {
     type: String,
-    required: true,
+    required: true
   },
-  movieId:{
+  movieId: {
     type: String,
-    required: true,
+    required: true
   },
-  nameRU : {
+  nameRU: {
     type: String,
-    required: true,
+    required: true
   },
   nameEN: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 module.exports = mongoose.model('movie', MovieSchema);

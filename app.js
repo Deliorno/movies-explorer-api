@@ -1,8 +1,12 @@
 // http://localhost:3000/users
 const mongoose = require('mongoose');
-
+const express = require('express');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const cors = require('cors');
+const { MONGO_URL } = require('./config');
 // подключаемся к серверу mongo
-const {MONGO_URL} = require('./config');
+
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -11,15 +15,11 @@ mongoose.connect(MONGO_URL, {
 });
 
 require('dotenv').config();
+
 const { PORT = 3005 } = process.env;
 
-
-const cors = require('cors');
-const helmet = require('helmet');
-const bodyParser = require('body-parser');
-const express = require('express');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const routes = require('./routes')
+const routes = require('./routes');
 const { NotFoundError } = require('./errors/errors');
 // const crypto = require('crypto'); // экспортируем crypto
 

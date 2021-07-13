@@ -56,7 +56,7 @@ module.exports.login = (req, res, next) => {
 
 module.exports.createUsers = (req, res, next) => {
   const { email, password, name } = req.body;
-  console.log(req.body)
+  // console.log(req.body);
   if (validator.isEmail(email)) {
     bcrypt.hash(password, 10)
       .then((hash) => User.create({
@@ -64,7 +64,7 @@ module.exports.createUsers = (req, res, next) => {
         password: hash, // записываем хеш в базу
         name
       }))
-      .then((user) => res.send({ email:user.email, password:password, name:user.name }))
+      .then((user) => res.send({ email: user.email, password, name: user.name }))
       .catch((err) => {
         errHandler(err);
         next(err);
@@ -76,7 +76,7 @@ module.exports.createUsers = (req, res, next) => {
 
 module.exports.patchInfo = (req, res, next) => {
   const { name, email } = req.body;
-  if(validator.isEmail(email)){
+  if (validator.isEmail(email)) {
     User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
       .then((user) => {
         if (user) {
