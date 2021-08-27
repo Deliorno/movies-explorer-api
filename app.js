@@ -36,19 +36,20 @@ const allowedCors = [
 app.use(function(req, res, next) {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
   // проверяем, что источник запроса есть среди разрешённых 
+  //console.log(origin)
   if (allowedCors.includes(origin)) {
     // устанавливаем заголовок, который разрешает браузеру запросы с этого источника
     res.header('Access-Control-Allow-Origin', origin);
   }
 
-  // Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
+  const { method } = req;
   const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE"; 
+  // console.log(method)
   // Если это предварительный запрос, добавляем нужные заголовки
   if (method === 'OPTIONS') {
-    // разрешаем кросс-доменные запросы любых типов (по умолчанию) 
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+      // разрешаем кросс-доменные запросы любых типов (по умолчанию) 
+      res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
   }
-
   next();
 });
 
