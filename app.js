@@ -32,6 +32,17 @@ const allowedCors = [
   'http://deliorno.your-movies.nomoredomains.club',
   'https://deliorno.your-movies.nomoredomains.club'
 ];
+const { method } = req; // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
+// сохраняем список заголовков исходного запроса 
+const requestHeaders = req.headers['access-control-request-headers']; 
+
+// Если это предварительный запрос, добавляем нужные заголовки
+if (method === 'OPTIONS') {
+    // разрешаем кросс-доменные запросы с этими заголовками
+    res.header('Access-Control-Allow-Headers', requestHeaders);
+    // завершаем обработку запроса и возвращаем результат клиенту
+    return res.end()
+}
 
 app.use(function(req, res, next) {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
