@@ -53,10 +53,10 @@ module.exports.createMovies = (req, res, next) => {
     image,
     trailer,
     thumbnail,
-    owner: req.user._id,
     movieId,
     nameRU,
-    nameEN
+    nameEN,
+    owner: req.user._id
   }) // owner: req.user._id
     .then((movie) => res.send({ data: movie }))
     .catch((err) => {

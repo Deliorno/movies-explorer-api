@@ -28,7 +28,9 @@ const { NotFoundError } = require('./errors/errors');
 const app = express();
 
 const allowedCors = [
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'http://deliorno.your-movies.nomoredomains.club',
+  'https://deliorno.your-movies.nomoredomains.club'
 ];
 
 app.use(
